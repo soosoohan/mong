@@ -51,7 +51,6 @@
     color: #7A2E2E;
     margin: 20px 0;
   }
-
   .score-computer {
     background-color: #CDFFD1; /* 컴퓨터 점수: 연두색 배경 */
     padding: 5px 10px;
@@ -59,6 +58,11 @@
     display: inline-block;
     margin: 0 5px;
   }
+
+.score-computer, .score-user {
+    display: inline-block;
+    margin: 0 20px;
+}
 
   .score-user {
     background-color: #FFDCDC; /* 사용자 점수: 연핑크 배경 */
@@ -115,6 +119,51 @@
     display: none;
   }
 
+  /* 모바일 반응형 스타일 */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 12px;
+      margin: 0 10px 15px;
+    }
+
+    .score-display {
+      font-size: 20px;
+      margin: 15px 0;
+    }
+
+    #game {
+      grid-template-columns: repeat(19, 1fr);
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .cell {
+      width: 16px;
+      height: 16px;
+      font-size: 10px;
+    }
+
+    #currentTurn {
+      font-size: 18px;
+      margin: 8px;
+    }
+
+    .game-button {
+      font-size: 16px;
+      padding: 8px 18px;
+      margin: 5px;
+    }
+
+    .controls {
+      margin-top: 10px;
+    }
+  }
 
 </style>
 
@@ -123,7 +172,7 @@
 <body>
 
 <h1 id="game-title">WORPUZZMONG</h1>
-<p id="game-desc">단어를 찾아서 점수를 얻는 게임입니다.</p>
+<p id="game-desc"></p>
 <div class="game-container">
 
   <div id="gameSection">
@@ -139,6 +188,7 @@
   <button id="retryBtn" class="game-button">다시 하기/ RETRY</button>
   <button onclick="location.href='index.html'" class="game-button">홈으로/ HOME</button>
 </div>
+
 
   </div>
 
@@ -169,7 +219,7 @@ window.onload = () => {
   const poolFile = urlParams.get('pool');
   if (!poolFile) {
     // 임시로 기본 단어들 설정
-    words = ['TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY', 'TEMPORARY'];
+    words = ['HELLO', 'WORLD', 'GAME', 'PLAY', 'WORD', 'PUZZLE', 'FIND', 'SEARCH', 'CLICK', 'REVEAL'];
     gameSection.classList.remove('hidden');
     init();
     return;
@@ -198,7 +248,7 @@ window.onload = () => {
     .catch(err => {
       // 에러 발생 시 기본 단어들로 진행
       words = [
-'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR', 'ERROR'];
+'GRANDFATHER', 'GRANDMOTHER', 'GRANDPARENT', 'INTERESTING', 'WORD', 'SUPERMARKET', 'FIND', 'CONVERSATION', 'INFORMATION', 'DESCRIPTION'];
       gameSection.classList.remove('hidden');
       init();
     });
