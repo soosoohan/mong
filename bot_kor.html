@@ -263,11 +263,13 @@ function init() {
     console.log('모든 단어가 성공적으로 배치되었습니다 (3방향 사용)');
   } else {
     console.log('방향 검증 실패 - 기본 배치로 진행');
-    // 기본 배치 로직
+    // 기본 배치 로직 (긴 단어 우선)
     let placedWords = [];
-    shuffle(words);
+    // 단어를 길이 순으로 정렬 (긴 것부터)
+    const sortedWords = [...words].sort((a, b) => b.length - a.length);
+    console.log('길이순 정렬된 단어:', sortedWords.map(w => `${w}(${w.length}자)`));
     
-    for (let word of words) {
+    for (let word of sortedWords) {
       let placed = false;
       for (let attempt = 0; attempt < 500; attempt++) {
         if (placeWord(word)) {
@@ -377,12 +379,17 @@ function placeAllWordsWithVariety() {
     wordMap = {};
     
     let allPlaced = true;
-    const shuffledWords = [...words].sort(() => Math.random() - 0.5);
+    // 긴 단어부터 배치하도록 정렬
+    const sortedWords = [...words].sort((a, b) => b.length - a.length);
+    console.log(`${attempts + 1}번째 시도 - 길이순 정렬:`, sortedWords.map(w => `${w}(${w.length}자)`));
     
-    for (let word of shuffledWords) {
+    for (let word of sortedWords) {
       if (!placeWord(word)) {
         allPlaced = false;
+        console.log(`배치 실패: ${word}(${word.length}자)`);
         break;
+      } else {
+        console.log(`배치 성공: ${word}(${word.length}자)`);
       }
     }
     
