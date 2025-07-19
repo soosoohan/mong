@@ -217,8 +217,13 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const poolFile = urlParams.get('pool');
   if (!poolFile) {
-    // 임시로 기본 단어들 설정
-    words = ['HELLO', 'WORLD', 'GAME', 'PLAY', 'WORD', 'PUZZLE', 'FIND', 'SEARCH', 'CLICK', 'REVEAL'];
+    // 긴 단어들을 포함한 기본 단어들 설정
+    words = [
+      'GRANDFATHER', 'GRANDMOTHER', 'GRANDPARENT', 'INTERESTING', 
+      'SUPERMARKET', 'CONVERSATION', 'INFORMATION', 'DESCRIPTION',
+      'UNDERSTANDING', 'INTERNATIONAL', 'ENTERTAINMENT', 'DEVELOPMENT',
+      'HELLO', 'WORLD', 'GAME', 'PLAY', 'WORD', 'PUZZLE', 'FIND', 'SEARCH'
+    ];
     gameSection.classList.remove('hidden');
     init();
     return;
@@ -245,9 +250,13 @@ window.onload = () => {
       init();
     })
     .catch(err => {
-      // 에러 발생 시 기본 단어들로 진행
+      // 에러 발생 시 긴 단어들을 포함한 기본 단어들로 진행
       words = [
-'GRANDFATHER', 'GRANDMOTHER', 'GRANDPARENT', 'INTERESTING', 'WORD', 'SUPERMARKET', 'FIND', 'CONVERSATION', 'INFORMATION', 'DESCRIPTION'];
+        'GRANDFATHER', 'GRANDMOTHER', 'GRANDPARENT', 'INTERESTING', 
+        'SUPERMARKET', 'CONVERSATION', 'INFORMATION', 'DESCRIPTION',
+        'UNDERSTANDING', 'INTERNATIONAL', 'ENTERTAINMENT', 'DEVELOPMENT',
+        'HELLO', 'WORLD', 'GAME', 'PLAY', 'WORD', 'PUZZLE', 'FIND', 'SEARCH'
+      ];
       gameSection.classList.remove('hidden');
       init();
     });
@@ -289,18 +298,18 @@ function init() {
 
   createGrid();
   
-  // 방향 검증과 함께 단어 배치
-  if (placeAllWordsWithVariety()) {
-    console.log('모든 단어가 성공적으로 배치되었습니다 (3방향 사용)');
+  // 긴 단어부터 먼저 배치하는 전략
+  if (placeAllWordsLongFirst()) {
+    console.log('모든 단어가 성공적으로 배치되었습니다 (긴 단어 우선)');
   } else {
-    console.log('방향 검증 실패 - 기본 배치로 진행');
+    console.log('긴 단어 우선 배치 실패 - 기본 배치로 진행');
     // 기본 배치 로직
     let placedWords = [];
     shuffle(words);
     
     for (let word of words) {
       let placed = false;
-      for (let attempt = 0; attempt < 500; attempt++) {
+      for (let attempt = 0; attempt < 1000; attempt++) {
         if (placeWord(word)) {
           placedWords.push(word);
           placed = true;
@@ -314,9 +323,9 @@ function init() {
     console.log('실제 배치된 단어 수:', placedWords.length);
   }
   
-  // 데이지 8%, 클로버 15% 배치
-  const daisyCount = Math.round(totalCells * 0.05); // 5%
-  const cloverCount = Math.round(totalCells * 0.10); // 10%
+  // 데이지 5%, 클로버 10% 배치
+  const daisyCount = Math.round(totalCells * 0.05);
+  const cloverCount = Math.round(totalCells * 0.10);
   
   placeDaisies(daisyCount);
   placeClovers(cloverCount);
@@ -338,12 +347,21 @@ function createGrid() {
 }
 
 function canPlaceWord(word, x, y, dx, dy) {
+  // 경계 확인 개선
+  const endX = x + dx * (word.length - 1);
+  const endY = y + dy * (word.length - 1);
+  
+  if (endX < 0 || endY < 0 || endX >= gridSize || endY >= gridHeight) return false;
+  
   for (let i = 0; i < word.length; i++) {
-    let nx = x + dx * i, ny = y + dy * i;
-    if (nx < 0 || ny < 0 || nx >= gridSize || ny >= gridHeight) return false;
-    
+    let nx = x + dx * i;
+    let ny = y + dy * i;
     let idx = ny * gridSize + nx;
+    
+    // 이미 다른 문자가 있고 현재 문자와 다르면 배치 불가
     if (board[idx] && board[idx] !== word[i]) return false;
+    
+    // 이미 다른 단어에 의해 사용된 위치면 배치 불가
     if (usedIndexes.has(idx)) return false;
   }
   return true;
@@ -356,27 +374,36 @@ function placeWord(word) {
     { x: 1, y: 1 },   // 대각선 (오른쪽 아래)
   ];
   
+  // 방향을 섞어서 다양성 확보
   const shuffledDirections = directions.sort(() => Math.random() - 0.5);
+  
+  // 시작 위치를 무작위로 시도
+  const positions = [];
+  for (let y = 0; y < gridHeight; y++) {
+    for (let x = 0; x < gridSize; x++) {
+      positions.push({x, y});
+    }
+  }
+  shuffle(positions);
  
   for (let dir of shuffledDirections) {
-    const startY = Math.floor(Math.random() * gridHeight);
-    for (let i = 0; i < gridHeight; i++) {
-      const y = (startY + i) % gridHeight;
-      for (let x = 0; x < gridSize; x++) {
-        if (canPlaceWord(word, x, y, dir.x, dir.y)) {
-          let positions = [];
-          for (let i = 0; i < word.length; i++) {
-            let nx = x + dir.x * i, ny = y + dir.y * i, idx = ny * gridSize + nx;
-            board[idx] = word[i];
-            usedIndexes.add(idx);
-            positions.push(idx);
-          }
-          wordMap[word] = {
-            positions: positions,
-            direction: [dir.x, dir.y]
-          };
-          return true;
+    for (let pos of positions) {
+      if (canPlaceWord(word, pos.x, pos.y, dir.x, dir.y)) {
+        let positions = [];
+        for (let i = 0; i < word.length; i++) {
+          let nx = pos.x + dir.x * i;
+          let ny = pos.y + dir.y * i;
+          let idx = ny * gridSize + nx;
+          board[idx] = word[i];
+          usedIndexes.add(idx);
+          positions.push(idx);
         }
+        wordMap[word] = {
+          positions: positions,
+          direction: [dir.x, dir.y]
+        };
+        console.log(`단어 "${word}" 배치 완료 (${pos.x},${pos.y}) 방향(${dir.x},${dir.y})`);
+        return true;
       }
     }
   }
@@ -402,27 +429,31 @@ function checkDirectionVariety() {
   return directionCount['1,0'] > 0 && directionCount['0,1'] > 0 && directionCount['1,1'] > 0;
 }
 
-function placeAllWordsWithVariety() {
+// 긴 단어부터 배치하는 새로운 함수
+function placeAllWordsLongFirst() {
   let attempts = 0;
-  const maxAttempts = 10;
+  const maxAttempts = 15;
   
   do {
     board = Array(totalCells).fill(null);
     usedIndexes.clear();
     wordMap = {};
     
-    let allPlaced = true;
-    const shuffledWords = [...words].sort(() => Math.random() - 0.5);
+    // 긴 단어부터 배치 (길이 순으로 정렬)
+    const sortedWords = [...words].sort((a, b) => b.length - a.length);
+    console.log('배치 순서 (길이별):', sortedWords.map(w => `${w}(${w.length})`));
     
-    for (let word of shuffledWords) {
+    let allPlaced = true;
+    for (let word of sortedWords) {
       if (!placeWord(word)) {
+        console.log(`배치 실패: ${word} (길이: ${word.length})`);
         allPlaced = false;
         break;
       }
     }
     
     if (allPlaced && checkDirectionVariety()) {
-      console.log(`성공! ${attempts + 1}번째 시도에서 3방향 모두 사용됨`);
+      console.log(`성공! ${attempts + 1}번째 시도에서 모든 단어 배치 및 3방향 모두 사용됨`);
       return true;
     }
     
@@ -622,6 +653,7 @@ function checkWords() {
         );
       });
       updateScore();
+      console.log(`${currentPlayer}가 단어 "${word}" 발견!`);
     }
   }
 }
