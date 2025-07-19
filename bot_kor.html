@@ -54,6 +54,33 @@
     color: white;
     transform: scale(1.05);
   }
+ 
+.score-display {
+    font-size: 24px;
+    font-weight: bold;
+    color: #7A2E2E;
+    margin: 20px 0;
+  }
+.score-computer {
+    background-color: #CDFFD1; /* 컴퓨터 점수: 연두색 배경 */
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 5px;
+  }
+
+.score-computer, .score-user {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+  .score-user {
+    background-color: #FFDCDC; /* 사용자 점수: 연핑크 배경 */
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 5px;
+  }
 
   .container {
     display: flex;
@@ -62,17 +89,10 @@
     margin-bottom: 20px;
   }
 
-  /* 모바일용 점수판 컨테이너 (기본적으로 숨김) */
-  .mobile-scores {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    justify-content: center;
-  }
-
+  
   .cell {
-    width: 50px;
-    height: 50px;
+    width: 43px;
+    height: 43px;
     background-color: #FFFFFF; /* 기본 셀 배경: 베이지 오렌지 */
     display: flex;
     justify-content: center ;
@@ -96,43 +116,6 @@
     background-color: #FFE8CD; /* 컴퓨터 점유 셀: 연오렌지 */
   }
 
-  #userScore, #computerScore {
-    width: 160px;
-    min-height: 300px;
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    border: 2px solid #7A2E2E;
-    color: #7A2E2E;
-  }
-
-  #userScore {
-    background-color: #FFDCDC;
-  }
-
-  #computerScore {
-    background-color: #FFE8CD;
-  }
-
-  /* 모바일용 점수판 스타일 */
-  #userScore-mobile, #computerScore-mobile {
-    width: 45%;
-    min-height: 150px;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    border: 2px solid #7A2E2E;
-    color: #7A2E2E;
-    display: none;
-  }
-
-  #userScore-mobile {
-    background-color: #FFDCDC;
-  }
-
-  #computerScore-mobile {
-    background-color: #FFE8CD;
-  }
 
   #currentTurn {
     font-size: 20px;
@@ -142,124 +125,52 @@
 
   #game {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-gap: 3px;
+    grid-template-columns: repeat(17, 1fr);
+    grid-gap: 2px;
     padding: 3px;
     border: 2px solid #C89A7B;
     background-color: #FFF2EB;
+    max-width: 800px;
+    margin: 0 auto;
   }
 
   .hidden {
     display: none;
   }
 
-  /* 모바일 반응형 스타일 */
-  @media (max-width: 768px) {
-    h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    p {
-      font-size: 12px;
-      margin: 0 10px 15px;
-    }
-
-    .container {
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* 데스크톱 점수판 숨기기 */
-    #userScore, #computerScore {
-      display: none !important;
-    }
-
-    /* 모바일 점수판 보이기 */
-    .mobile-scores {
-      display: flex !important;
-    }
-
-    #userScore-mobile, #computerScore-mobile {
-      display: block !important;
-    }
-
-    #game {
-      grid-template-columns: repeat(10, 1fr);
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .cell {
-      width: 35px;
-      height: 35px;
-      font-size: 18px;
-    }
-
-    #currentTurn {
-      font-size: 18px;
-      margin: 8px;
-    }
-
-    .game-button {
-      font-size: 16px;
-      padding: 8px 18px;
-      margin: 5px;
-    }
-
-    .controls {
-      margin-top: 10px;
-    }
-  }
+  
 </style>
 
 </head>
 
 <body>
 
-<h1 id="game-title">게임 제목</h1>
-<p id="game-desc">게임 설명</p>
+<h1 id="game-title">WORPUZZMONG</h1>
+<p id="game-desc"></p>
 <div class="game-container">
 
-  <div id="gameSection" class="hidden">
+  <div id="gameSection">
     <div id="currentTurn"></div>
 
-
-<div class="container">
-  <div id="computerScore">
-    <h3>컴퓨터:</h3>
-  </div>
-  <div id="game"></div>
-  <div id="userScore">
-    <h3>사용자:</h3>
-  </div>
+<div class="score-display">
+  <span class="score-computer">컴퓨터 COMPUTER: <span id="computerScoreNum">0</span></span>  <span class="score-user">사용자 USER: <span id="userScoreNum">0</span></span>
 </div>
 
-<!-- 모바일용 점수판 -->
-<div class="mobile-scores">
-  <div id="computerScore-mobile">
-    <h3>컴퓨터:</h3>
-  </div>
-  <div id="userScore-mobile">
-    <h3>사용자:</h3>
-  </div>
-</div>
+<div id="game"></div>
 
 <div class="controls">
-  <button id="retryBtn" class="game-button">다시 하기</button>
-  <button onclick="location.href='index.html'" class="game-button">초기 화면</button>
+  <button id="retryBtn" class="game-button">다시 하기/ RETRY</button>
+  <button onclick="location.href='index.html'" class="game-button">홈으로/ HOME</button>
 </div>
-
 
   </div>
 
 </div>
 
 <script>
-const gridSize = 10;
-const totalCells = gridSize * gridSize;
+const gridSize = 17;
+const gridHeight = 10;
+const totalCells = gridSize * gridHeight;
 
 // 🎮 게임 상태 변수들
 let board, revealed, wordMap, foundWords, currentPlayer, foundBy, words, usedIndexes;
@@ -269,10 +180,8 @@ let npcTimeoutId = null;
 
 // 📦 DOM 요소 연결
 const gameEl = document.getElementById('game');
-const userScoreEl = document.getElementById('userScore');
-const computerScoreEl = document.getElementById('computerScore');
-const userScoreMobileEl = document.getElementById('userScore-mobile');
-const computerScoreMobileEl = document.getElementById('computerScore-mobile');
+const userScoreNumEl = document.getElementById('userScoreNum');
+const computerScoreNumEl = document.getElementById('computerScoreNum');
 const retryBtn = document.getElementById('retryBtn');
 const gameSection = document.getElementById('gameSection');
 const currentTurnEl = document.getElementById('currentTurn');
@@ -281,7 +190,10 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const poolFile = urlParams.get('pool');
   if (!poolFile) {
-    document.body.innerHTML = '<p>❌ 워드풀 파일이 지정되지 않았습니다.</p>';
+    // 임시로 기본 단어들 설정
+    words = ['서울특별시', '부산직할시', '여수밤바다', '목포의눈물', '동백아가씨', '이차선다리'];
+    gameSection.classList.remove('hidden');
+    init();
     return;
   }
 
@@ -371,8 +283,8 @@ function init() {
     console.log('실제 배치된 단어 수:', placedWords.length);
   }
   
-  placeDaisies(3);
-  placeClovers(7);
+  placeDaisies(13);
+  placeClovers(26);
   fillEmptyCells();
   updateScore();
   updateTurnDisplay();
@@ -393,7 +305,7 @@ function createGrid() {
 function canPlaceWord(word, x, y, dx, dy) {
   for (let i = 0; i < word.length; i++) {
     let nx = x + dx * i, ny = y + dy * i;
-    if (nx < 0 || ny < 0 || nx >= gridSize || ny >= gridSize) return false;
+    if (nx < 0 || ny < 0 || nx >= gridSize || ny >= gridHeight) return false;
     
     let idx = ny * gridSize + nx;
     if (board[idx] && board[idx] !== word[i]) return false;
@@ -412,9 +324,9 @@ function placeWord(word) {
   const shuffledDirections = directions.sort(() => Math.random() - 0.5);
  
   for (let dir of shuffledDirections) {
-    const startY = Math.floor(Math.random() * gridSize);
-    for (let i = 0; i < gridSize; i++) {
-      const y = (startY + i) % gridSize;
+    const startY = Math.floor(Math.random() * gridHeight);
+    for (let i = 0; i < gridHeight; i++) {
+      const y = (startY + i) % gridHeight;
       for (let x = 0; x < gridSize; x++) {
         if (canPlaceWord(word, x, y, dir.x, dir.y)) {
           let positions = [];
@@ -528,7 +440,7 @@ function isSafeForSpecial(idx) {
       if (dx === 0 && dy === 0) continue;
       const nx = x + dx;
       const ny = y + dy;
-      if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize) {
+      if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridHeight) {
         const nIdx = ny * gridSize + nx;
         if (clovers.has(nIdx) || daisies.has(nIdx)) {
           return false;
@@ -579,7 +491,7 @@ function reveal(index) {
         if (dx === 0 && dy === 0) continue;
         const nx = x + dx;
         const ny = y + dy;
-        if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize) {
+        if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridHeight) {
           const nIdx = ny * gridSize + nx;
           if (!revealed[nIdx]) reveal(nIdx);
         }
@@ -592,30 +504,19 @@ function reveal(index) {
 }
 
 function updateScore() {
-  const userScoreContent = `<h3>사용자:</h3><br>` + foundBy.user.map(w => `✓ ${w}`).join("<br>");
-  const computerScoreContent = `<h3>컴퓨터:</h3><br>` + foundBy.computer.map(w => `✓ ${w}`).join("<br>");
+  // 점수 숫자 업데이트
+  userScoreNumEl.textContent = foundBy.user.length;
+  computerScoreNumEl.textContent = foundBy.computer.length;
   
-  // 데스크톱 점수판 업데이트
-  userScoreEl.innerHTML = userScoreContent;
-  computerScoreEl.innerHTML = computerScoreContent;
-  
-  // 모바일 점수판 업데이트
-  userScoreMobileEl.innerHTML = userScoreContent;
-  computerScoreMobileEl.innerHTML = computerScoreContent;
+  console.log('점수 업데이트:', { user: foundBy.user.length, computer: foundBy.computer.length });
 }
 
 function updateTurnDisplay() {
-  if (resultShown) return; // 게임 종료 시 메시지 갱신 차단
-
-  const isKorean = location.href.includes('kor');
-
-  const name = currentPlayer === 'user'
-    ? (isKorean ? '사용자' : 'USER')
-    : (isKorean ? '컴퓨터' : 'COMPUTER');
-
-  currentTurnEl.textContent = isKorean
-    ? `${name}의 차례입니다.`
-    : `It's ${name}'s turn.`;
+  if (resultShown) return;
+  const name = currentPlayer === 'user' ? '사용자' : '컴퓨터';
+  currentTurnEl.textContent = `${name}의 차례입니다.`;
+  
+  console.log('현재 차례:', currentPlayer);
 }
 
 function switchTurn(extra) {
@@ -623,7 +524,7 @@ function switchTurn(extra) {
     currentPlayer = currentPlayer === 'user' ? 'computer' : 'user';
   }
   updateTurnDisplay();
-
+  
   // 🤖 컴퓨터 턴이면 자동 플레이
   if (currentPlayer === 'computer' && !resultShown) {
     npcTimeoutId = setTimeout(() => {
@@ -651,12 +552,22 @@ function computerMove() {
   const selectedCell = availableCells[randomIndex];
   
   console.log('컴퓨터가 선택한 셀:', selectedCell);
-  handleClick(selectedCell);
+  handleClickInternal(selectedCell, 'computer'); // 컴퓨터 클릭임을 명시
 }
 
 function handleClick(index) {
+  // 사용자 클릭은 사용자 턴일 때만 허용
+  if (currentPlayer !== 'user' || revealed[index] || resultShown) return;
+  
+  handleClickInternal(index, 'user');
+}
+
+function handleClickInternal(index, player) {
   if (revealed[index] || resultShown) return;
 
+  // 현재 플레이어를 명시적으로 설정 (컴퓨터 턴 보장)
+  currentPlayer = player;
+  
   const extra = clovers.has(index) || daisies.has(index);
   reveal(index);
   checkWords();
@@ -680,6 +591,7 @@ function checkWords() {
           currentPlayer === 'user' ? 'word-owned-user' : 'word-owned-computer'
         );
       });
+      console.log(`${word} 단어를 ${currentPlayer}가 발견!`);
       updateScore();
     }
   }
@@ -697,27 +609,20 @@ function checkGameEnd() {
 
     const userWords = foundBy.user.length;
     const computerWords = foundBy.computer.length;
-    const isKorean = location.href.includes('kor');
 
     let winner = '';
     if (userWords > computerWords) {
-      winner = isKorean ? '사용자 승!' : 'USER WINS!';
+      winner = '사용자 승!';
     } else if (computerWords > userWords) {
-      winner = isKorean ? '컴퓨터 승!' : 'COMPUTER WINS!';
+      winner = '컴퓨터 승!';
     } else {
-      winner = isKorean ? '무승부!' : 'DRAW!';
+      winner = '무승부!';
     }
 
-    currentTurnEl.textContent = isKorean
-      ? `게임 종료! ${winner}`
-      : `Game Over! ${winner}`;
+    currentTurnEl.textContent = `게임 종료! ${winner}`;
 
     setTimeout(() => {
-      if (isKorean) {
-        alert(`게임 종료!\n\n사용자: ${userWords}개\n컴퓨터: ${computerWords}개\n\n${winner}`);
-      } else {
-        alert(`Game Over!\n\nUSER: ${userWords} words\nCOMPUTER: ${computerWords} words\n\n${winner}`);
-      }
+      alert(`게임 종료!\n\n사용자: ${userWords}개\n컴퓨터: ${computerWords}개\n\n${winner}`);
     }, 500);
   }
 }
