@@ -189,7 +189,6 @@
   <button onclick="location.href='index.html'" class="game-button">홈으로/ HOME</button>
 </div>
 
-
   </div>
 
 </div>
@@ -316,8 +315,8 @@ function init() {
   }
   
   // 데이지 8%, 클로버 15% 배치
-  const daisyCount = Math.round(totalCells * 0.08); // 8%
-  const cloverCount = Math.round(totalCells * 0.15); // 15%
+  const daisyCount = Math.round(totalCells * 0.05); // 5%
+  const cloverCount = Math.round(totalCells * 0.10); // 10%
   
   placeDaisies(daisyCount);
   placeClovers(cloverCount);
@@ -583,12 +582,22 @@ function computerMove() {
   const selectedCell = availableCells[randomIndex];
   
   console.log('컴퓨터가 선택한 셀:', selectedCell);
-  handleClick(selectedCell);
+  handleClickInternal(selectedCell, 'computer'); // 컴퓨터 클릭임을 명시
 }
 
 function handleClick(index) {
+  // 사용자 클릭은 사용자 턴일 때만 허용
+  if (currentPlayer !== 'user' || revealed[index] || resultShown) return;
+  
+  handleClickInternal(index, 'user');
+}
+
+function handleClickInternal(index, player) {
   if (revealed[index] || resultShown) return;
 
+  // 현재 플레이어를 명시적으로 설정
+  currentPlayer = player;
+  
   const extra = clovers.has(index) || daisies.has(index);
   reveal(index);
   checkWords();
