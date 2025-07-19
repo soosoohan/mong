@@ -1,7 +1,7 @@
 
 {
 "__comment": "e9",  
-"title": " WORPUZZ MIMETIC WORDS",
+"title": " WORPUZZMONG MIMETIC WORDS",
 
 "description": "Find the onomatopoeic and ideophonic words hidden horizontally, vertically, and diagonally in the grid!\nIf you spot a four-leaf clover 🍀, you earn an extra turn!\nIf you spot a daisy 🌼, you earn an extra turn.\nCompete against the computer — whoever finds the most wins!",
 
@@ -19,19 +19,18 @@
 
 ],
 "8":["FLIMFLAM","FLIPFLOP","ROLLROLL","SQUABBLE","TILTTILT","BLINGBLING","BLOOBBLOOB"
-]
+],
+"9":[
+"BLINGBLING","BLOOBBLOOB","CHICKABIDDY"]
 
 },
   "wordCount": {
-"3":1,
-"4": 2,   
- "5": 3,
+"3":2,
+"4":3,   
+ "5":3,
 "6":3,
-"7":2,
-"8":1
-  }
+"7":3,
+"8":2,
+"9":1  }
 }
-
-
-
 
