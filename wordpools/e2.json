@@ -1,10 +1,10 @@
 
 {
 "__comment": "e2",  
-"title": "WORPUZZ LARGE A2 Oxford Elementary",
- 
-"description": "Find the words hidden horizontally, vertically, and diagonally in the grid!\nIf you spot a four-leaf clover 🍀, you earn an extra turn!\nIf you spot a daisy 🌼, you earn an extra turn!\nCompete against the computer — whoever finds the most wins!",
+ "title": "WORPUZZ MONG A2 ",
 
+"description": "Oxford Elementary",
+ 
 
   "words": {
     "3": ["ACT","ALL","ANY","APP","BAR","BIN","BIT","CAN","CRY","DRY","FAN","FAT","FIT","FIX","FLU","FLY","FUN","GAP","GAS","GOD","GUN","GUY","HIS","HIT","ILL","JAM","KID","LAB","LAW","LOW","MAY","NUT","OIL","OWN","PAY","PER","PET","POP","PUB","RUN","SIR","SKI","SKY","TIE","TIP","TOP","TOY","USE","VAN","WAR","WEB","WET","WOW","YET"],
