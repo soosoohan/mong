@@ -239,11 +239,11 @@ Choose a word pool below to begin the game.</div>
       
      const w = window.innerWidth;
     const h = window.innerHeight;
-    const isPhoneScreen = w <= 850 || h <= 500;
+    const isPhoneScreen = w <= 760 || h <= 500;
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     if (isTouch && isPhoneScreen) {
-        location.href = "https://worzzle-one.vercel.app";
+        location.href = "https://worpuzz.vercel.app";
     
     };
 
