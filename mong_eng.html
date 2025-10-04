@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
- <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -83,7 +84,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2em;
+    font-size: 1.8em;
     font-weight: bold;
     cursor: pointer;
     user-select: none;
@@ -92,11 +93,12 @@
 
   .revealed {
     background-color: #fff;
+    font-size: 1.8em;
   }
   
   .revealed.clover {
     background-color: #fff;
-    font-size: 1.3em;
+    font-size: 2em;
   }
   
   .revealed.clover span {
@@ -105,7 +107,7 @@
 
   .revealed.daisy {
     background-color: #fff4e0; 
-    font-size: 1.3em;
+    font-size: 2em;
   }
   
   .revealed.daisy span {
@@ -220,12 +222,16 @@
     }
 
     .cell {
-      font-size: 0.9em;
+      font-size: 1.4em;
+    }
+
+    .revealed {
+      font-size: 1.4em;
     }
 
     .revealed.clover,
     .revealed.daisy {
-      font-size: 1.1em;
+      font-size: 1.6em;
     }
     
     /* 데스크톱 점수판 숨김 */
@@ -239,7 +245,7 @@
       flex-direction: column;
       gap: 10px;
       width: 95%;
-      max-width: 480px;
+      max-width: 760px;
       margin-top: 15px;
     }
     
@@ -267,7 +273,7 @@
     .btn-container {
       margin: 15px 0;
       width: 95%;
-      max-width: 480px;
+      max-width: 760px;
       justify-content: center;
     }
     
@@ -289,6 +295,7 @@
 <div id="currentTurn"></div>
 
 <!-- 데스크톱: 게임판 + 양쪽 점수판 -->
+
 <div class="container">
   <div id="npcScore">
     <h2>NPC:</h2>
@@ -300,6 +307,7 @@
 </div>
 
 <!-- 모바일: 게임판 아래 점수판 -->
+
 <div class="score-container">
   <div id="npcScore-mobile">
     <h2>NPC:</h2>
@@ -435,7 +443,11 @@ function createGrid() {
   for (let i = 0; i < totalCells; i++) {
     const cell = document.createElement('div');
     cell.className = 'cell';
-    cell.onclick = () => { if (!resultShown) handleClick(i); };
+    cell.onclick = () => { 
+      if (!resultShown && currentPlayer === 'user') {
+        handleClick(i);
+      }
+    };
     gameEl.appendChild(cell);
   }
 }
@@ -663,17 +675,23 @@ function switchTurn(extra) {
   if (!extra) {
     currentPlayer = currentPlayer === 'user' ? 'npc' : 'user';
   }
+  console.log(`턴 전환: 현재 플레이어 ${currentPlayer}, 추가턴: ${extra}`);
   updateTurnDisplay();
   
   if (currentPlayer === 'npc' && !resultShown) {
     npcTimeoutId = setTimeout(() => {
-      npcMove();
+      if (!resultShown) {
+        npcMove();
+      }
     }, 1000);
   }
 }
 
 function npcMove() {
-  if (resultShown) return;
+  if (resultShown) {
+    console.log('게임 종료됨 - NPC 턴 중단');
+    return;
+  }
   
   const availableCells = [];
   for (let i = 0; i < totalCells; i++) {
@@ -682,21 +700,38 @@ function npcMove() {
     }
   }
   
-  if (availableCells.length === 0) return;
+  console.log(`NPC 턴: ${availableCells.length}개 셀 남음`);
+  
+  if (availableCells.length === 0) {
+    console.log('선택 가능한 셀 없음');
+    return;
+  }
   
   const randomIndex = Math.floor(Math.random() * availableCells.length);
   const selectedCell = availableCells[randomIndex];
   
-  console.log('컴퓨터가 선택한 셀:', selectedCell);
+  console.log('NPC가 선택한 셀:', selectedCell);
   handleClick(selectedCell, true);
 }
 
 function handleClick(index, isnpcMove = false) {
   if (revealed[index] || resultShown) return;
   
-  if (currentPlayer !== 'user' && !isnpcMove) return;
+  // NPC 차례일 때 유저 클릭 차단
+  if (currentPlayer === 'npc' && !isnpcMove) {
+    console.log('NPC 차례입니다. 유저 클릭 무시됨');
+    return;
+  }
+  
+  // 유저 차례일 때 NPC 동작 차단
+  if (currentPlayer === 'user' && isnpcMove) {
+    console.log('유저 차례입니다. NPC 동작 무시됨');
+    return;
+  }
 
   const extra = clovers.has(index) || daisies.has(index);
+  console.log(`클릭: 인덱스 ${index}, 플레이어: ${currentPlayer}, 추가턴: ${extra}`);
+  
   reveal(index);
   checkWords();
   checkGameEnd();
@@ -726,6 +761,8 @@ function checkWords() {
 
 function checkGameEnd() {
   const totalWords = Object.keys(wordMap).length;
+  console.log(`게임 체크: ${foundWords.size}/${totalWords} 단어 발견`);
+  
   if (foundWords.size >= totalWords && totalWords > 0) {
     resultShown = true;
     
