@@ -13,7 +13,7 @@ The game will continue to be improved and upgraded.
  🛡️ **This game has been officially copyright registered.**  
  Unauthorized reproduction, use, or commercial distribution may result in legal consequences.  
 
- ----
+----
 
 ### 🔎 How to Play  
 - Words are hidden horizontally, vertically, and diagonally within a grid.  
@@ -24,14 +24,20 @@ The game will continue to be improved and upgraded.
 - The player who finds more words wins!  
 - Enjoy expanding your vocabulary and learning new words!
 
+---
+
 ### 🎯 Features  
 ✅ Inspired by Minesweeper, but with lucky four-leaf clovers and hidden words instead!  
 ✅ Strategically uncover the grid to find as many words as possible.  
 ✅ Uses the Oxford dictionary’s word difficulty levels for an engaging challenge.  
 ✅ Playable in both Korean and English!
+
 ---
+
 ### 워퍼즈몽 주소 : https://soosooland.com/mong/
+
 ---
+
 ## 🌟 Soosooland - Puzzle Game Hub by Han Soosoo
 
  "Learning through fun, and fun through learning."
