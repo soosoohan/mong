@@ -31,7 +31,12 @@
     <link rel="alternate" hreflang="en" href="https://soosooland.com/mong/mong_eng.html">
  
 <style>
-  body {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 이거 특히 중요! */
+  }
+    body {
     font-family: Arial, sans-serif;
     background: #209087;
     color: #fff;
@@ -41,7 +46,7 @@
     margin: 0;
     padding: 10px;
   }
-.back-button {
+  .back-button {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -55,12 +60,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 100;
-}
-.back-button:hover {
+  }
+  .back-button:hover {
     background-color: #1baf8f;
     color: #fff;
-}
-
+  }
   h1 {
     font-size: 3em;
     margin: 20px 0 10px;
@@ -152,7 +156,7 @@
   /* 데스크톱 점수판 */
   #userScore {
     background: #209087;
-    color: #fff;
+    color: #a0fab5;
     width: 180px;
     height: 480px;
     padding: 15px;
