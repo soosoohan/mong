@@ -224,7 +224,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const screenWidth = window.innerWidth;
     
     // 화면이 760px 이하일 때 워퍼즈로 리다이렉트
-    if (screenWidth < 760 && !sessionStorage.getItem('fromMini')) {
+    if (screenWidth < 670 && !sessionStorage.getItem('fromMini')) {
         redirectToWorpuzz();
     }
 });
@@ -277,7 +277,7 @@ function redirectToWorpuzz() {
     document.body.appendChild(overlay);
     
     setTimeout(() => {
-        window.location.href = 'https://worpuzz.vercel.app';
+        window.location.href = 'https://soosooland.com/worpuzz';
     }, 1500);
 }
     function startGame(poolName, isEnglish) {
