@@ -16,7 +16,7 @@
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="컴퓨터와 큰 격자에서 단어 대결! 많은 단어와 전략적 플레이. 고급 난이도 워퍼즐 게임.">
-    <meta name="keywords" content="워퍼즈몽, 워퍼즐, 어려운단어게임, 고급단어게임, 어휘력게임, 대형격자, 전략게임, 두뇌게임, 치매예방">
+    <meta name="keywords" content="워퍼즈몽, 워퍼즈, 어려운단어게임, 고급단어게임, 어휘력게임, 대형격자, 전략게임, 두뇌게임, 치매예방">
     <meta name="author" content="Soosooland">
     
     <!-- Open Graph -->
@@ -112,7 +112,7 @@ body {
     gap: 20px;
     margin-bottom: 10px;
     width: 100%;
-    max-width: 640px;
+    max-width: 544px;
     justify-content: center;
   }
 
@@ -159,7 +159,7 @@ body {
     background: #209087;
     color: #fff;
     width: 180px;
-    height: 632px;
+    height: 544px;
     padding: 15px;
     box-sizing: border-box;
     border-radius: 12px;
@@ -200,14 +200,14 @@ body {
 
   #game {
     display: grid;
-    grid-template-columns: repeat(14, 1fr);
-    grid-template-rows: repeat(14, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
     grid-gap: 4px;
     padding: 10px;
     background-color: #0E756D;
     border-radius: 12px;
-    width: 632px;
-    height: 632px;
+    width: 544px;
+    height: 544px;
     box-sizing: border-box;
     flex-shrink: 0;
   }
@@ -276,7 +276,7 @@ body {
       display: flex !important;
       flex-direction: column;
       gap: 10px;
-      width: 632px;
+      width: 544px;
       margin-top: 15px;
     }
     
@@ -305,7 +305,7 @@ body {
     .btn-container {
       margin: 15px 0;
       width: 95%;
-      max-width: 480px;
+      max-width: 544px;
       justify-content: center;
     }
     
@@ -355,7 +355,7 @@ body {
 </div>
 
 <script>
-const gridSize = 14;
+const gridSize = 12;
 const totalCells = gridSize * gridSize;
 
 let board, revealed, wordMap, foundWords, currentPlayer, foundBy, words, usedIndexes;
@@ -460,8 +460,8 @@ function init() {
     console.log('실제 배치된 단어 수:', placedWords.length);
   }
   
-  placeDaisies(10);
-  placeClovers(20);
+  placeDaisies(7);
+  placeClovers(7);
   fillEmptyCells();
   updateScore();
   updateTurnDisplay();
