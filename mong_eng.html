@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-4YZHC1G9FN');
-    </script>
-
+ 
 <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Worpuzz Mong - Large Grid Word Search Game | Soosooland</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Challenge the computer in a large word grid! More words and strategic gameplay. Advanced difficulty Worpuzz puzzle.">
-    <meta name="keywords" content="worpuzz mong, large word search, advanced word game, hard difficulty, vocabulary challenge, strategic puzzle, brain game">
-    <meta name="author" content="Soosooland">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Worpuzz Mong - Large Grid Word Search">
-    <meta property="og:description" content="Challenge the computer in a large grid! Advanced difficulty Worpuzz">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://soosooland.com/mong/mong_eng.html">
-    <meta property="og:image" content="https://soosooland.com/images/worpuzz.jpeg">
-    <meta property="og:site_name" content="Soosooland">
-    <link rel="canonical" href="https://soosooland.com/mong/mong_eng.html">
-    <link rel="alternate" hreflang="ko" href="https://soosooland.com/mong/mong_kor.html">
-    <link rel="alternate" hreflang="en" href="https://soosooland.com/mong/mong_eng.html">
-    <link rel="stylesheet" href="https://soosooland.com/css/protection.css">
-    <script src="https://soosooland.com/js/protection.js"></script>
-
+ 
 <style>
- * {
+    * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
  }
+
+.screen-warning {
+  display: none;
+  text-align: center;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: 100px auto;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.screen-warning h2 {
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+.screen-warning p {
+  color: #666;
+  line-height: 1.6;
+}
  body {
     font-family: Arial, sans-serif;
-    background: #209087;
+    background: #145454;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -53,10 +49,10 @@
     top: 20px;
     left: 20px;
     padding: 8px 10px;      /* 모바일 기본 */
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
-    background-color: #CFF9FF;
-    color: #0A6A79;
+    background-color:#145454 ;
+    color: #CFF9FF;
     border-radius: 12px;
     border: none;
     cursor: pointer;
@@ -81,6 +77,45 @@
     text-align: center;
     line-height: 1.4;
   }
+/* 난이도 선택 화면 */
+#difficultyScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+#difficultyScreen h2 {
+  font-size: 2em;
+  color: #FFE680;
+  margin-bottom: 10px;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.difficulty-btn {
+  font-size: 1.3em;
+  background-color: #CFF9FF;
+  color: #0A6A79;
+  padding: 20px 40px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.difficulty-btn:hover {
+  background-color: #1baf8f;
+  color: #fff;
+  transform: scale(1.05);
+}
 
   .game-area {
     display: flex;
@@ -215,8 +250,8 @@
   }
 
   .hidden {
-    display: none;
-  }
+  display: none !important;
+}
 
   .btn-container {
     display: flex;
@@ -251,7 +286,14 @@
       margin: 0 10px 15px;
     }
     
-    /* 모바일: 세로 배치 */
+    #difficultyScreen h2 {
+      font-size: 1.5em;
+   }
+
+   .difficulty-btn {
+      font-size: 1.1em;
+      padding: 15px 30px;
+   }
     .container {
       flex-direction: column;
       align-items: center;
@@ -333,10 +375,29 @@
 </head>
 
 <body>
+ <div class="screen-warning" id="warning">
+    <h2>Screen Too Small</h2>
+    <p>This game is a large grid mode, designed to be played on screens of at least 700px or larger.</p>
+    <p>For screens smaller than 700px, please use Worpuzz.</p>
+    <p>이 게임은 두 사용자가 큰 격자에서 대결하는 모드로 최소 700px 이상의 화면에서 플레이하도록 디자인되었습니다</p>
+    <p>700px 보다 작은 화면에서는 워퍼즈를 이용하세요</p>
+    <button onclick="location.href='https://soosooland.com/worpuzz/'" class="game-button">Play Worpuzz<br> 워퍼즈 하러가기</button>
+  </div>
+ 
 <button class="back-button"  onclick="location.href='index.html'">←</button>
 <h1 id="game-title">게임 제목</h1>
 <p id="game-desc">게임 설명</p>
+<!-- 난이도 선택 화면 -->
+<div id="difficultyScreen">
+  <h2>Select NPC Difficulty</h2>
+  <div class="difficulty-buttons">
+    <button class="difficulty-btn" onclick="startGame('easy')">Easy</button>
+    <button class="difficulty-btn" onclick="startGame('normal')">Hard</button>
+  </div>
+</div>
 
+<!-- 게임 화면 -->
+<div id="gameScreen" class="hidden">
 <div id="currentTurn"></div>
 
 <!-- 데스크톱: 게임판 + 양쪽 점수판 -->
@@ -362,10 +423,75 @@
 <div class="btn-container">
   <button id="retryBtn">↻ Restart</button>
 </div>
+</div>
+ <script>
+function checkScreenSize() {
+  const warning = document.getElementById('warning');
+  const gameTitle = document.getElementById('game-title');
+  const gameDesc = document.getElementById('game-desc');
+  const backButton = document.querySelector('.back-button');
+  const difficultyScreen = document.getElementById('difficultyScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  
+  if (window.innerWidth < 700) {
+    warning.style.display = 'block';
+    if (gameTitle) gameTitle.style.display = 'none';
+    if (gameDesc) gameDesc.style.display = 'none';
+    if (backButton) backButton.style.display = 'none';
+    if (difficultyScreen) difficultyScreen.style.display = 'none';
+    if (gameScreen) gameScreen.style.display = 'none';
+  } else {
+    warning.style.display = 'none';
+    if (gameTitle) gameTitle.style.display = 'block';
+    if (gameDesc) gameDesc.style.display = 'block';
+    if (backButton) backButton.style.display = 'block';
+    if (difficultyScreen) difficultyScreen.style.display = 'flex';
+    // gameScreen은 hidden 클래스로 제어됨
+  }
+}
 
-<script>
+// DOMContentLoaded로 먼저 체크
+document.addEventListener('DOMContentLoaded', function() {
+  checkScreenSize();
+});
+
+window.addEventListener('resize', checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
+
+    // Prevent zoom/scroll
+    document.addEventListener('touchmove', function(e) {
+      if (e.scale !== 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener('gesturestart', function(e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener('gesturechange', function(e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener('gestureend', function(e) {
+      e.preventDefault();
+    });
+
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+
+    // 전역 변수 선언
 const gridSize = 14;
 const totalCells = gridSize * gridSize;
+let npcDifficulty = 'easy';
+const difficultyScreen = document.getElementById('difficultyScreen');
+const gameScreen = document.getElementById('gameScreen');
 
 let board, revealed, wordMap, foundWords, currentPlayer, foundBy, words, usedIndexes;
 let clovers = new Set(), daisies = new Set();
@@ -380,13 +506,67 @@ const npcScoreMobileEl = document.getElementById('npcScore-mobile');
 const retryBtn = document.getElementById('retryBtn');
 const currentTurnEl = document.getElementById('currentTurn');
 
+function startGame(difficulty) {
+  npcDifficulty = difficulty;
+  difficultyScreen.classList.add('hidden');
+  gameScreen.classList.remove('hidden');
+  init();
+}
+
+
+function getAdjacentCells(index) {
+  const x = index % gridSize;
+  const y = Math.floor(index / gridSize);
+  const adjacent = [];
+  
+  for (let dy = -1; dy <= 1; dy++) {
+    for (let dx = -1; dx <= 1; dx++) {
+      if (dx === 0 && dy === 0) continue;
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize) {
+        const nIdx = ny * gridSize + nx;
+        if (!revealed[nIdx]) {
+          adjacent.push(nIdx);
+        }
+      }
+    }
+  }
+  return adjacent;
+}
+
+function isNextToSpecial(index) {
+  const x = index % gridSize;
+  const y = Math.floor(index / gridSize);
+  
+  for (let dy = -1; dy <= 1; dy++) {
+    for (let dx = -1; dx <= 1; dx++) {
+      if (dx === 0 && dy === 0) continue;
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize) {
+        const nIdx = ny * gridSize + nx;
+        if (clovers.has(nIdx) || daisies.has(nIdx)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 window.onload = () => {
+  checkScreenSize(); // 화면 크기 먼저 체크
+  
+  if (window.innerWidth < 600) {
+    return; // 화면이 작으면 게임 로드하지 않음
+  }
+  
   const urlParams = new URLSearchParams(window.location.search);
   const poolFile = urlParams.get('pool');
   if (!poolFile) {
-    words = ['cat', 'game', 'play','about','above','again','advice','animal','always','answer', 'actress','airport','another','activity','anything','afternoon','apartment'];
-    init();
-    return;
+    words = ['CAT', 'AGE', 'AREA', 'AWAY','ALSO','BABY','ABOUT','ADULT','AGAIN','ACROSS','ACTION','ADVICE','ACTRESS','AMAZING','ACTIVITY','ANYTHING',' AFTERNOON'];
+    return; // init()을 호출하지 않음 - 난이도 선택 후에만 실행
   }
 
   fetch('wordpools/' + poolFile + '.json')
@@ -404,8 +584,6 @@ window.onload = () => {
       }
       console.log('총 단어 수:', words.length);
       console.log('단어 목록:', words);
-      
-      init();
     })
     .catch(err => {
       document.body.innerHTML = '<p>❌ 워드풀 로딩 중 오류 발생: ' + err.message + '</p>';
@@ -503,7 +681,6 @@ function createGrid() {
   return true;
 }
 
-// placeWord 함수에서 긴 단어 기준
 function placeWord(word) {
   // 12글자 이상은 대각선 금지
   const isLongWord = word.length >= 12;
@@ -720,7 +897,8 @@ function updateScore() {
 function updateTurnDisplay() {
   if (resultShown) return;
   const name = currentPlayer === 'user' ? 'USER' : 'NPC';
-  currentTurnEl.textContent = `It is ${name}'s turn.`;
+  const difficultyText = npcDifficulty === 'easy' ? '(Easy)' : '(Normal)';
+  currentTurnEl.textContent = `It is ${name}'s turn. ${currentPlayer === 'npc' ? difficultyText : ''}`;
 }
 
 function switchTurn(extra) {
@@ -739,19 +917,57 @@ function switchTurn(extra) {
 function npcMove() {
   if (resultShown) return;
   
-  const availableCells = [];
-  for (let i = 0; i < totalCells; i++) {
-    if (!revealed[i]) {
-      availableCells.push(i);
+  let selectedCell;
+  
+  if (npcDifficulty === 'easy') {
+    // 쉬움: 완전 랜덤
+    const availableCells = [];
+    for (let i = 0; i < totalCells; i++) {
+      if (!revealed[i]) {
+        availableCells.push(i);
+      }
+    }
+    
+    if (availableCells.length === 0) return;
+    
+    const randomIndex = Math.floor(Math.random() * availableCells.length);
+    selectedCell = availableCells[randomIndex];
+    
+  } else {
+    // 보통: 똑똑한 전략
+    let nearRevealedCells = [];
+    for (let i = 0; i < totalCells; i++) {
+      if (revealed[i]) {
+        const adjacent = getAdjacentCells(i);
+        nearRevealedCells.push(...adjacent);
+      }
+    }
+    
+    nearRevealedCells = [...new Set(nearRevealedCells)];
+    
+    let smartCells = nearRevealedCells.filter(idx => !isNextToSpecial(idx));
+    
+    if (smartCells.length > 0) {
+      const randomIndex = Math.floor(Math.random() * smartCells.length);
+      selectedCell = smartCells[randomIndex];
+    } else if (nearRevealedCells.length > 0) {
+      const randomIndex = Math.floor(Math.random() * nearRevealedCells.length);
+      selectedCell = nearRevealedCells[randomIndex];
+    } else {
+      const availableCells = [];
+      for (let i = 0; i < totalCells; i++) {
+        if (!revealed[i]) {
+          availableCells.push(i);
+        }
+      }
+      
+      if (availableCells.length === 0) return;
+      
+      const randomIndex = Math.floor(Math.random() * availableCells.length);
+      selectedCell = availableCells[randomIndex];
     }
   }
   
-  if (availableCells.length === 0) return;
-  
-  const randomIndex = Math.floor(Math.random() * availableCells.length);
-  const selectedCell = availableCells[randomIndex];
-  
-  console.log('컴퓨터가 선택한 셀:', selectedCell);
   handleClick(selectedCell, true);
 }
 
@@ -831,8 +1047,10 @@ function checkGameEnd() {
 }
 
 retryBtn.onclick = () => {
-  init();
+  gameScreen.classList.add('hidden');
+  difficultyScreen.classList.remove('hidden');
 };
+
 </script>
 
 </body>
