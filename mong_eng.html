@@ -117,7 +117,12 @@
   transform: scale(1.05);
 }
 
-  .game-area {
+ .difficulty-btn.active {
+  background-color: #4CAF50; /* 또는 원하는 색상 */
+  border: 2px solid #45a049;
+} 
+
+ .game-area {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -248,10 +253,6 @@
     box-sizing: border-box;
     flex-shrink: 0;
   }
-
-  .hidden {
-  display: none !important;
-}
 
   .btn-container {
     display: flex;
@@ -387,16 +388,15 @@
 <p id="game-desc">게임 설명</p>
 <!-- 난이도 선택 화면 -->
 <div id="difficultyScreen">
-  <h2>Select NPC Difficulty</h2>
   <div class="difficulty-buttons">
-    <button class="difficulty-btn" onclick="startGame('easy')">Easy</button>
-    <button class="difficulty-btn" onclick="startGame('normal')">Normal</button>
+  <button class="difficulty-btn active" onclick="setDifficulty('easy')">Easy</button>
+  <button class="difficulty-btn" onclick="setDifficulty('normal')">Normal</button>
   </div>
 </div>
 
 
 <!-- 게임 화면 -->
-<div id="gameScreen" class="hidden">
+<div id="gameScreen">
 <div id="currentTurn"></div>
 
 <!-- 데스크톱: 게임판 + 양쪽 점수판 -->
@@ -488,7 +488,20 @@ window.addEventListener('resize', checkScreenSize);
     // 전역 변수 선언
 const gridSize = 14;
 const totalCells = gridSize * gridSize;
-let npcDifficulty = 'easy';
+let npcDifficulty = 'easy'; // 맨 위 변수 선언부에 추가
+
+function setDifficulty(level) {
+  npcDifficulty = level;
+  
+  // 모든 버튼에서 active 제거
+  document.querySelectorAll('.difficulty-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // 클릭한 버튼에만 active 추가
+  event.target.classList.add('active');
+}
+
 const difficultyScreen = document.getElementById('difficultyScreen');
 const gameScreen = document.getElementById('gameScreen');
 
@@ -1047,8 +1060,7 @@ function checkGameEnd() {
 }
 
 retryBtn.onclick = () => {
-  gameScreen.classList.add('hidden');
-  difficultyScreen.classList.remove('hidden');
+startGame(npcDifficulty); 
 };
 
 </script>
