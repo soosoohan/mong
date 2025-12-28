@@ -584,7 +584,7 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const poolFile = urlParams.get('pool');
   if (!poolFile) {
-    words = ['CAT', 'AGE', 'AREA', 'AWAY','ALSO','BABY','ABOUT','ADULT','AGAIN','ACROSS','ACTION','ADVICE','ACTRESS','AMAZING','ACTIVITY','ANYTHING','AFTERNOON'];
+    words = ['AGE', 'AND', 'GAME', 'AUNT ', 'BANK ', 'ALSO',  'ABOUT', 'ACTOR', 'ABOUT', 'ACROSS ', 'PUZZLE', 'ACROSS', 'ADDRESS', 'AIRPORT', 'ANYTHING', 'BATHROOM', 'AFTERNOON'];
     init();
     return; 
   }
@@ -667,7 +667,7 @@ function init() {
     console.log('실제 배치된 단어 수:', placedWords.length);
   }
   
-  placeDaisies(30);
+  placeDaisies(20);
   placeClovers(20);
   fillEmptyCells();
   updateScore();
