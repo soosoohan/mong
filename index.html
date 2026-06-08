@@ -56,6 +56,25 @@
     text-align: center;
     color: #7A2E2E; /* 기본 텍스트: 부드러운 브라운 */
   }
+#lang-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: #2a2a4a;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: #f0c040;
+    font-size: 0.85rem;
+    cursor: pointer;
+    z-index: 100;
+    transition: background 0.2s;
+  }
+  #lang-toggle:hover { background: #3a3a6a; }
+
+  .lang-ko, .lang-en { transition: opacity 0.2s; }
+  body.en .lang-ko { display: none; }
+  body.ko .lang-en { display: none; }
 
 h1 {
 font-size: clamp(1.3rem, 3.7vw, 1.9rem);
@@ -167,7 +186,9 @@ font-size: 1.1em;
     }
 </style>
 </head>
-<body>
+<body class="ko" onload="initLanguage()">
+<button id="lang-toggle" onclick="toggleLang()">English</button>
+
   <button class="back-button" onclick="location.href='https://soosooland.com/'">
     Soosooland </button>
   <h1>WORPUZZ MONG </h1>
@@ -289,7 +310,34 @@ function redirectToWorpuzz() {
         window.location.href = 'https://soosooland.com/worpuzz';
     }, 1500);
 }
-    function startGame(poolName, isEnglish) {
+    function toggleLang() {
+  const body = document.body;
+  const btn = document.getElementById('lang-toggle');
+  if (body.classList.contains('ko')) {
+    body.classList.replace('ko', 'en');
+    document.documentElement.lang = 'en';
+    btn.textContent = '한국어';
+    localStorage.setItem('soosoo-lang', 'en'); // 여기
+  } else {
+    body.classList.replace('en', 'ko');
+    document.documentElement.lang = 'ko';
+    btn.textContent = 'EN';
+    localStorage.setItem('soosoo-lang', 'ko'); // 여기
+  }
+}
+  function initLanguage() {
+  const saved = localStorage.getItem('soosoo-lang');
+  const lang = saved || (navigator.language.startsWith('ko') ? 'ko' : 'en');
+  const body = document.body;
+  const btn = document.getElementById('lang-toggle');
+  if (lang === 'en') {
+    body.classList.replace('ko', 'en');
+    document.documentElement.lang = 'en';
+    btn.textContent = '한국어';
+  }
+}
+
+   function startGame(poolName, isEnglish) {
       const page = isEnglish ? 'mong_eng.html' : 'mong_kor.html';
       location.href = `${page}?pool=${poolName}`;
     }
