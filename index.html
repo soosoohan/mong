@@ -60,17 +60,17 @@
     position: fixed;
     top: 16px;
     right: 16px;
-    background: #2a2a4a;
-    border: 1px solid #444;
+    background: #FFF2EB;
+    border: 1px solid #FF9494;
     border-radius: 20px;
     padding: 6px 14px;
-    color: #f0c040;
+    color: #FF9494;
     font-size: 0.85rem;
     cursor: pointer;
     z-index: 100;
     transition: background 0.2s;
   }
-  #lang-toggle:hover { background: #3a3a6a; }
+  #lang-toggle:hover { background: #FFF2EB; }
 
   .lang-ko, .lang-en { transition: opacity 0.2s; }
   body.en .lang-ko { display: none; }
@@ -191,9 +191,13 @@ font-size: 1.1em;
 
   <button class="back-button" onclick="location.href='https://soosooland.com/'">
     Soosooland </button>
-  <h1>WORPUZZ MONG </h1>
+  
 
-  <div class="description">
+ <h1 class="lang-ko">워퍼즈 몽</h1>
+  <h1 class="lang-en">WORPUZZ MONG</h1>
+
+
+  <div class="description lang-ko">
     컴퓨터와 교대로 격자를 클릭하여 숨겨진 단어를 찾아가는 1인용 단어 찾기 게임입니다.<br>
     격자가 영어는 가로19*세로12이고, 한글은 가로17*세로10가 있는 큰 사이즈입니다.<br>
     영어 게임은 3~16글자의 영어단어가 들어있습니다.<br> 
@@ -201,7 +205,9 @@ font-size: 1.1em;
     더 많은 단어를 찾는 것이 목표이며, 승패 없이 "게임 종료"로 마무리됩니다.<br><br>
     🍀 클로버를 열면 상하좌우 4칸이 함께 열리고 한 번 더 턴을 가집니다.<br>
      <img src="daisy_64x64.png" alt="데이지" style="width:21px; height:21px; vertical-align:middle;"> 데이지를 열면 주변 8칸이 모두 열리며 마찬가지로 추가 턴이 주어집니다.<br>
-    아래에서 원하는 워드풀을 선택해 게임을 시작하세요.<br>
+    아래에서 원하는 워드풀을 선택해 게임을 시작하세요.<br></div>
+
+<div class="description lang-en">
     This is a single-player Worpuzz game where you take turns with the computer to uncover hidden words in the grid.<br>
     The grid is large-sized: 19×12 for English and 17×10 for Korean.<br>
     The English game contains English words from 3 to 16 letters.<br>
