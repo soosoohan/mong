@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
- <!-- Google tag (gtag.js) -->
+<script>
+  if (window.top !== window.self) {
+    window.top.location = "https://soosooland.com";
+  }
+    if (window.innerWidth < 670) {
+    window.location.href = 'https://soosooland.com/worpuzz';
+  }
+  console.log("© 2025-2026 Soosooland by 한수수. All rights reserved.");
+  console.log("https://soosooland.com");
+  console.log("🎮 Worpuzz Mong | Born: 2025-07-20");
+</script>
+<!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -155,16 +166,6 @@ cursor: pointer;
 background-color: #FF7373;
 }
 
-.redirect-message {
-background-color: #FF9494;
-color: white;
-padding: 15px;
-border-radius: 8px;
-margin: 20px auto;
-max-width: 600px;
-font-size: 1.1em;
-}
-
   .back-button {
         position: absolute;
         top: 20px;
@@ -184,6 +185,13 @@ font-size: 1.1em;
         background-color: #FF9494;
         color: white;
     }
+ footer {
+text-align: center;
+color: #7A2E2E;
+font-size: 0.8rem;
+margin-top: 30px;
+}
+
 </style>
 </head>
 <body class="ko" onload="initLanguage()">
@@ -246,76 +254,11 @@ font-size: 1.1em;
 </div>
 
   </div>
-  <script>
-window.addEventListener('DOMContentLoaded', () => {
-    const screenWidth = window.innerWidth;
-   
-    // 화면이 670px 이하일 때 워퍼즈로 리다이렉트
-    if (screenWidth < 670 && !sessionStorage.getItem('fromMini')) {
-        redirectToWorpuzz();
-    }
-});
- // 뒤로가기 대응
-window.addEventListener('pageshow', (event) => {
-    if (event.persisted) { // 캐시에서 복원된 경우
-        const screenWidth = window.innerWidth;
-        if (screenWidth < 670 && !sessionStorage.getItem('fromMini')) {
-            redirectToWorpuzz();
-        }
-    }
-});
+ <footer>
+  <p>© 2025 Han Soosoo. All rights reserved.</p>
+</footer>
 
-function redirectToWorpuzz() {
-    const overlay = document.createElement('div');
-    overlay.innerHTML = `
-        <div style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            color: white;
-            text-align: center;
-            font-family: inherit;
-        ">
-            <div style="padding: 30px;">
-                <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
-                <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px;">
-                    화면이 너무 작습니다
-                </div>
-                <div style="font-size: 16px; margin-bottom: 10px;">
-                    Screen width must be at least 760px
-                </div>
-                <div style="font-size: 14px; opacity: 0.8; margin-bottom: 25px;">
-                    워퍼즈로 자동 이동합니다...<br>
-                    Redirecting to Worpuzz...
-                </div>
-                <div class="loading-dots" style="font-size: 30px; letter-spacing: 5px;">
-                    ⚡⚡⚡
-                </div>
-            </div>
-        </div>
-        <style>
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.3; }
-            }
-            .loading-dots {
-                animation: blink 1.5s infinite;
-            }
-        </style>
-    `;
-    document.body.appendChild(overlay);
-    
-    setTimeout(() => {
-        window.location.href = 'https://soosooland.com/worpuzz';
-    }, 1500);
-}
+  <script>
     function toggleLang() {
   const body = document.body;
   const btn = document.getElementById('lang-toggle');
