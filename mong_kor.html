@@ -5,6 +5,10 @@
   if (window.top !== window.self) {
     window.top.location = "https://soosooland.com";
   }
+  if (window.innerWidth < 650) {
+    window.location.href = 'https://soosooland.com/worpuzz';
+  }
+ 
   console.log("© 2025-2026 Soosooland by 한수수. All rights reserved.");
   console.log("https://soosooland.com");
   console.log("🎮 Worpuzz Mong | Born: 2025-07-20");
@@ -304,6 +308,12 @@ body {
     background-color: #1baf8f;
     color: #fff;
   }
+footer {
+text-align: center;
+color: #c3dbdb;
+font-size: 0.8rem;
+margin-top: 30px;
+}
 
   /* 모바일 반응형 */
   @media (max-width: 950px) {
@@ -334,9 +344,6 @@ body {
     }
     
     #game {
-      width: 95%;
-      max-width: 632px;
-      height: auto;
       aspect-ratio: 1 / 1;
       grid-gap: 3px;
     }
@@ -397,13 +404,7 @@ body {
 </head>
 
 <body>
-  <div class="screen-warning" id="warning">
-    <h2>Screen Too Small</h2>
-    <p>이 게임은 두 사용자가 큰 격자에서 대결하는 모드로 최소 660px 이상의 화면에서 플레이하도록 디자인되었습니다</p>
-    <p>660px 보다 작은 화면에서는 워퍼즈를 이용하세요</p>
-    <button onclick="location.href='https://soosooland.com/worpuzz/'" class="game-button"> 워퍼즈<br> 하러가기</button>
-  </div>
-  <button class="back-button"  onclick="location.href='index.html'">←</button>
+<button class="back-button"  onclick="location.href='index.html'">←</button>
 <div class="game-header"> 
 <h1 id="game-title">게임 제목</h1>
 <p id="game-desc">게임 설명</p>
@@ -447,67 +448,11 @@ body {
   <button id="retryBtn">↻ 다시 시작</button>
 </div>
 </div>
+<footer>
+  <p>© 2025 Han Soosoo. All rights reserved.</p>
+</footer>
 
  <script>
-function checkScreenSize() {
-  const warning = document.getElementById('warning');
-  const gameTitle = document.getElementById('game-title');
-  const gameDesc = document.getElementById('game-desc');
-  const backButton = document.querySelector('.back-button');
-  const difficultyScreen = document.getElementById('difficultyScreen');
-  const gameScreen = document.getElementById('gameScreen');
-  
-  if (window.innerWidth < 660) {
-    warning.style.display = 'block';
-    if (gameTitle) gameTitle.style.display = 'none';
-    if (gameDesc) gameDesc.style.display = 'none';
-    if (backButton) backButton.style.display = 'none';
-    if (difficultyScreen) difficultyScreen.style.display = 'none';
-    if (gameScreen) gameScreen.style.display = 'none';
-  } else {
-    warning.style.display = 'none';
-    if (gameTitle) gameTitle.style.display = 'block';
-    if (gameDesc) gameDesc.style.display = 'block';
-    if (backButton) backButton.style.display = 'block';
-    if (difficultyScreen) difficultyScreen.style.display = 'flex';
-    // gameScreen은 hidden 클래스로 제어됨
-  }
-}
-
-// DOMContentLoaded로 먼저 체크
-document.addEventListener('DOMContentLoaded', function() {
-  checkScreenSize();
-});
-
-window.addEventListener('resize', checkScreenSize);
-
-    // Prevent zoom/scroll
-    document.addEventListener('touchmove', function(e) {
-      if (e.scale !== 1) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-
-    document.addEventListener('gesturestart', function(e) {
-      e.preventDefault();
-    });
-
-    document.addEventListener('gesturechange', function(e) {
-      e.preventDefault();
-    });
-
-    document.addEventListener('gestureend', function(e) {
-      e.preventDefault();
-    });
-
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function(event) {
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    }, false);
 
     // 전역 변수 선언
 const gridSize = 12;
