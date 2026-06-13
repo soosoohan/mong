@@ -4,7 +4,7 @@
   if (window.top !== window.self) {
     window.top.location = "https://soosooland.com";
   }
-    if (window.innerWidth < 670) {
+    if (window.innerWidth < 650) {
     window.location.href = 'https://soosooland.com/worpuzz';
   }
   console.log("© 2025-2026 Soosooland by 한수수. All rights reserved.");
@@ -207,6 +207,12 @@ body {
   .revealed.daisy span {
     font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   }
+footer {
+text-align: center;
+color: #c3dbdb;
+font-size: 0.8rem;
+margin-top: 30px;
+}
 
   /* 데스크톱 점수판 */
   #npcScore, #userScore {
@@ -412,45 +418,11 @@ body {
   <button id="retryBtn">↻ Restart</button>
 </div>
 </div>
+  <footer>
+  <p>© 2025 Han Soosoo. All rights reserved.</p>
+</footer>
+
  <script>
-function checkScreenSize() {
-  const warning = document.getElementById('warning');
-  const gameTitle = document.getElementById('game-title');
-  const gameDesc = document.getElementById('game-desc');
-  const backButton = document.querySelector('.back-button');
-  const difficultyScreen = document.getElementById('difficultyScreen');
-  const gameScreen = document.getElementById('gameScreen');
-  
-}
-
-    
-    // Prevent zoom/scroll
-    document.addEventListener('touchmove', function(e) {
-      if (e.scale !== 1) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-
-    document.addEventListener('gesturestart', function(e) {
-      e.preventDefault();
-    });
-
-    document.addEventListener('gesturechange', function(e) {
-      e.preventDefault();
-    });
-
-    document.addEventListener('gestureend', function(e) {
-      e.preventDefault();
-    });
-
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function(event) {
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    }, false);
 
     // 전역 변수 선언
 const gridSize = 14;
