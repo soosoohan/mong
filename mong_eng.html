@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>Worpuzz Mong - Large Grid Word Search Game | Soosooland</title>
+    <title>Worpuzz Large - Large Grid Word Search Game | Soosooland</title>
 <script>
   if (window.top !== window.self) {
     window.top.location = "https://soosooland.com";
@@ -13,7 +13,7 @@
   }
   console.log("© 2025-2026 Soosooland by 한수수. All rights reserved.");
   console.log("https://soosooland.com");
-  console.log("🎮 Worpuzz Mong | Born: 2025-07-20");
+  console.log("🎮 Worpuzz Large | Born: 2025-07-20");
 </script>
   <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4YZHC1G9FN"></script>
@@ -25,11 +25,11 @@
     </script>
      <!-- SEO Meta Tags -->
     <meta name="description" content="Challenge the computer in a large word grid! More words and strategic gameplay. Advanced difficulty Worpuzz puzzle.">
-    <meta name="keywords" content="worpuzz mong, large word search, advanced word game, hard difficulty, vocabulary challenge, strategic puzzle, brain game">
+    <meta name="keywords" content="worpuzz, large word search, advanced word game, hard difficulty, vocabulary challenge, strategic puzzle, brain game">
     <meta name="author" content="Soosooland">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Worpuzz Mong - Large Grid Word Search">
+    <meta property="og:title" content="Worpuzz Large- Large Grid Word Search">
     <meta property="og:description" content="Challenge the computer in a large grid! Advanced difficulty Worpuzz">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://soosooland.com/mong/mong_eng.html">
@@ -855,11 +855,30 @@ function switchTurn(extra) {
   }
 }
 
+function findAlmostCompleteWord() {
+  for (let word of Object.keys(wordMap)) {
+    if (foundWords.has(word)) continue;
+    const pos = wordMap[word].positions;
+    const unrevealed = pos.filter(i => !revealed[i]);
+    if (unrevealed.length === 1) {
+      return unrevealed[0]; // 마지막 한 칸의 인덱스
+    }
+  }
+  return null;
+}
+
 function npcMove() {
   if (resultShown) return;
-  
+
+  // 0순위: 마지막 한 글자만 남은 단어는 무조건 확정
+  let almostComplete = findAlmostCompleteWord();
+  if (almostComplete !== null) {
+    handleClick(almostComplete, true);
+    return;
+  }
+
   let selectedCell;
-  
+    
   if (npcDifficulty === 'easy') {
     // 쉬움: 완전 랜덤
     const availableCells = [];
