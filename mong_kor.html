@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>워퍼즈몽 - 큰 격자 단어 찾기 게임 | Soosooland</title>
+    <title>워퍼즈 라지 - 큰 격자 단어 찾기 게임 | Soosooland</title>
   <script>
   if (window.top !== window.self) {
     window.top.location = "https://soosooland.com";
@@ -27,12 +27,12 @@
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="컴퓨터와 큰 격자에서 단어 대결! 많은 단어와 전략적 플레이. 고급 난이도 워퍼즐 게임.">
-    <meta name="keywords" content="워퍼즈몽, 워퍼즈, 어려운단어게임, 고급단어게임, 어휘력게임, 대형격자, 전략게임, 두뇌게임, 치매예방">
+    <meta name="keywords" content="워퍼즈, 어려운단어게임, 고급단어게임, 어휘력게임, 대형격자, 전략게임">
     <meta name="author" content="Soosooland">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="워퍼즈몽 - 큰 격자 단어 찾기 게임">
-    <meta property="og:description" content="컴퓨터와 큰 격자에서 단어 대결! 고급 난이도 워퍼즐">
+    <meta property="og:title" content="워퍼즈 라지 - 큰 격자 단어 찾기 게임">
+    <meta property="og:description" content="컴퓨터와 큰 격자에서 단어 대결! 고급 난이도 단어 게임">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://soosooland.com/mong/mong_kor.html">
     <meta property="og:image" content="https://soosooland.com/images/worpuzz.jpeg">
@@ -883,12 +883,30 @@ function switchTurn(extra) {
     }, 1000);
   }
 }
+function findAlmostCompleteWord() {
+  for (let word of Object.keys(wordMap)) {
+    if (foundWords.has(word)) continue;
+    const pos = wordMap[word].positions;
+    const unrevealed = pos.filter(i => !revealed[i]);
+    if (unrevealed.length === 1) {
+      return unrevealed[0]; // 마지막 한 칸의 인덱스
+    }
+  }
+  return null;
+}
 
 function npcMove() {
   if (resultShown) return;
-  
+
+  // 0순위: 마지막 한 글자만 남은 단어는 무조건 확정
+  let almostComplete = findAlmostCompleteWord();
+  if (almostComplete !== null) {
+    handleClick(almostComplete, true);
+    return;
+  }
+
   let selectedCell;
-  
+    
   if (npcDifficulty === 'easy') {
     // 쉬움: 완전 랜덤
     const availableCells = [];
