@@ -375,8 +375,9 @@ margin-top: 30px;
 <!-- 난이도 선택 화면 -->
 <div id="difficultyScreen">
   <div class="difficulty-buttons">
-  <button class="difficulty-btn active" onclick="setDifficulty('easy')">Easy</button>
-  <button class="difficulty-btn" onclick="setDifficulty('normal')">Normal</button>
+  <button class="difficulty-btn" onclick="setDifficulty('easy')">Easy</button>
+<button class="difficulty-btn active" onclick="setDifficulty('normal')">Normal</button>
+<button class="difficulty-btn" onclick="setDifficulty('hard')">Hard</button>
   </div>
 </div>
 
@@ -418,18 +419,17 @@ margin-top: 30px;
     // 전역 변수 선언
 const gridSize = 14;
 const totalCells = gridSize * gridSize;
-let npcDifficulty = 'easy'; // 맨 위 변수 선언부에 추가
+let npcDifficulty = 'normal'; // 맨 위 변수 선언부에 추가
 
 function setDifficulty(level) {
   npcDifficulty = level;
-  
-  // 모든 버튼에서 active 제거
+
   document.querySelectorAll('.difficulty-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  
-  // 클릭한 버튼에만 active 추가
   event.target.classList.add('active');
+
+  init();   // 난이도가 바뀌면 보드를 새로 만들기
 }
 
 const difficultyScreen = document.getElementById('difficultyScreen');
@@ -501,7 +501,7 @@ window.onload = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const poolFile = urlParams.get('pool');
   if (!poolFile) {
-    words = ['AGE', 'AND', 'GAME', 'AUNT ', 'BANK ', 'ALSO',  'ABOUT', 'ACTOR', 'ABOUT', 'ACROSS ', 'PUZZLE', 'ACROSS', 'ADDRESS', 'AIRPORT', 'ANYTHING', 'BATHROOM', 'AFTERNOON'];
+    words = ['AGE', 'AND', 'GAME', 'AUNT', 'BANK', 'ALSO',  'ABOUT', 'ACTOR', 'ABOUT', 'ACROSS', 'PUZZLE', 'ACROSS', 'ADDRESS', 'AIRPORT', 'ANYTHING', 'BATHROOM', 'AFTERNOON'];
     init();
     return; 
   }
@@ -619,15 +619,17 @@ function createGrid() {
   return true;
 }
 
+const DIRS_EASY = [{ x: 1, y: 0 }, { x: 0, y: 1 }];                 // 가로, 세로
+const DIRS_FULL = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 }]; // 가로, 세로, 대각선
+
+
+function getDirections() {
+  return npcDifficulty === 'easy' ? DIRS_EASY : DIRS_FULL;
+}
+
 function placeWord(word) {
  
-  const directions = [
-        { x: 1, y: 0 },
-        { x: 0, y: 1 },
-        { x: 1, y: 1 },  
-      ];
-  
-  const shuffledDirections = directions.sort(() => Math.random() - 0.5);
+const shuffledDirections = [...getDirections()].sort(() => Math.random() - 0.5);
  
   for (let dir of shuffledDirections) {
     const startY = Math.floor(Math.random() * gridSize);
@@ -655,22 +657,11 @@ function placeWord(word) {
 }
 
 function checkDirectionVariety() {
-  let directionCount = {
-    '1,0': 0,
-    '0,1': 0,
-    '1,1': 0
-  };
-  
+  const used = new Set();
   for (let word in wordMap) {
-    const direction = wordMap[word].direction;
-    const key = direction[0] + ',' + direction[1];
-    if (directionCount.hasOwnProperty(key)) {
-      directionCount[key]++;
-    }
+    used.add(wordMap[word].direction[0] + ',' + wordMap[word].direction[1]);
   }
-  
-  console.log('방향별 사용 횟수:', directionCount);
-  return directionCount['1,0'] > 0 && directionCount['0,1'] > 0 && directionCount['1,1'] > 0;
+  return getDirections().every(d => used.has(d.x + ',' + d.y));
 }
 
 function placeAllWordsWithVariety() {
@@ -828,7 +819,7 @@ function updateScore() {
 function updateTurnDisplay() {
   if (resultShown) return;
   const name = currentPlayer === 'user' ? 'USER' : 'NPC';
-  const difficultyText = npcDifficulty === 'easy' ? '(Easy)' : '(Normal)';
+  const difficultyText = { easy: '(Easy)', normal: '(Normal)', hard: '(Hard)' }[npcDifficulty];
   currentTurnEl.textContent = `It is ${name}'s turn. ${currentPlayer === 'npc' ? difficultyText : ''}`;
 }
 
@@ -861,35 +852,34 @@ function findAlmostCompleteWord() {
 function npcMove() {
   if (resultShown) return;
 
-  // 0순위: 마지막 한 글자만 남은 단어는 무조건 확정
-  // 단, 쉬움 모드에서는 50% 확률로만 이 능력을 사용
+  // 0순위: 마지막 한 글자만 남은 단어는 확정
+  // 이지와  노말: 50% 확률 / 하드: 항상 사용
   let almostComplete = findAlmostCompleteWord();
-  if (almostComplete !== null) {
-    if (npcDifficulty === 'normal' || Math.random() < 0.5) {
-      handleClick(almostComplete, true);
-      return;
-    }
-    // 쉬움 모드에서 50% 확률로 걸리면 그냥 아래 랜덤 로직으로 넘어감
+if (almostComplete !== null) {
+  if (npcDifficulty === 'hard' || Math.random() < 0.5) {
+    handleClick(almostComplete, true);
+    return;
   }
+}
 
   let selectedCell;
-      
-  if (npcDifficulty === 'easy') {
-    // 쉬움: 완전 랜덤
+
+  if (npcDifficulty !== 'hard') {
+    // 이지, 노말: 완전 랜덤
     const availableCells = [];
     for (let i = 0; i < totalCells; i++) {
       if (!revealed[i]) {
         availableCells.push(i);
       }
     }
-    
+
     if (availableCells.length === 0) return;
-    
+
     const randomIndex = Math.floor(Math.random() * availableCells.length);
     selectedCell = availableCells[randomIndex];
-    
+
   } else {
-    // 보통: 똑똑한 전략
+    // 하드: 똑똑한 전략
     let nearRevealedCells = [];
     for (let i = 0; i < totalCells; i++) {
       if (revealed[i]) {
@@ -897,11 +887,11 @@ function npcMove() {
         nearRevealedCells.push(...adjacent);
       }
     }
-    
+
     nearRevealedCells = [...new Set(nearRevealedCells)];
-    
+
     let smartCells = nearRevealedCells.filter(idx => !isNextToSpecial(idx));
-    
+
     if (smartCells.length > 0) {
       const randomIndex = Math.floor(Math.random() * smartCells.length);
       selectedCell = smartCells[randomIndex];
@@ -915,14 +905,14 @@ function npcMove() {
           availableCells.push(i);
         }
       }
-      
+
       if (availableCells.length === 0) return;
-      
+
       const randomIndex = Math.floor(Math.random() * availableCells.length);
       selectedCell = availableCells[randomIndex];
     }
   }
-  
+
   handleClick(selectedCell, true);
 }
 function clearNpcLast() {
