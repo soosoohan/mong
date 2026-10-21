@@ -855,17 +855,18 @@ function findAlmostCompleteWord() {
   }
   return null;
 }
+const ALMOST_RATE = { easy: 0.3, normal: 0.5, hard: 1 };
 
 function npcMove() {
   if (resultShown) return;
 
-  // 0순위: 마지막 한 글자만 남은 단어는 확정
-  // 이지와  노말: 50% 확률 / 하드: 항상 사용
+  // 0순위: 마지막 한 글자만 남은 단어 확정
+  // 이지 30% / 노말 50% / 하드 100%
   let almostComplete = findAlmostCompleteWord();
-if (almostComplete !== null) {
-  if (npcDifficulty === 'hard' || Math.random() < 0.5) {
-    handleClick(almostComplete, true);
-    return;
+  if (almostComplete !== null) {
+    if (Math.random() < ALMOST_RATE[npcDifficulty]) {
+      handleClick(almostComplete, true);
+      return;
   }
 }
 
