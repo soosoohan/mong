@@ -431,14 +431,13 @@ let npcDifficulty = 'normal'; // 맨 위 변수 선언부에 추가
 
 function setDifficulty(level) {
   npcDifficulty = level;
-  
-  // 모든 버튼에서 active 제거
+
   document.querySelectorAll('.difficulty-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  
-  // 클릭한 버튼에만 active 추가
   event.target.classList.add('active');
+
+  init();   // 난이도가 바뀌면 보드를 새로 만들기
 }
 
 const difficultyScreen = document.getElementById('difficultyScreen');
