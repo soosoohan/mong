@@ -109,12 +109,10 @@
   .back-button:active {transform: scale(0.92);transition: transform 0.1s;}
 
   #lang-toggle {
-    position: fixed;
-    top: 16px;
-    right: 16px;
+    display: flex;
     background: #FFF2EB;
     border: 1px solid #9e5a5a;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 6px 14px;
     color: #9e5a5a;
     font-size: 0.85rem;
@@ -127,9 +125,14 @@
   .lang-ko, .lang-en { transition: opacity 0.2s; }
   body.en .lang-ko { display: none; }
   body.ko .lang-en { display: none; }
+header {
+  text-align: center;
+  margin: 0 auto 30px;
+  max-width: 800px;
+}
 
 .main-title {
-    margin: 60px 0 20px;
+    margin: 0 0 20px;
     font-size: 0;
 }
 .main-title img {
@@ -224,6 +227,9 @@ margin-top: 30px;
 .hidden {
     display: none;
 }
+header { display: flow-root; height: auto !important; }
+.main-title { height: auto !important; }
+.main-title img { position: static !important; float: none !important; }
 
 @media (max-width: 650px) {
     body {
@@ -293,20 +299,23 @@ margin-top: 30px;
         color: white;
     }
 }
-@media (max-width: 480px) {
-  .back-button { top: max(30px, env(safe-area-inset-top) + 10px); left: 10px;  width: 40px; height: 40px; }
-}
 </style>
 </head>
 <body class="ko" onload="initLanguage()">
- <button class="back-button" onclick="location.href='https://soosooland.com/'" aria-label="수수랜드 홈으로">
-<img src="https://soosooland.com/images/home.png" alt="수수랜드 홈"></button>  
+<link rel="stylesheet" href="toolbar.css">
+<div class="toolbar">
+  <button class="back-button" onclick="location.href='https://soosooland.com/'" aria-label="수수랜드 홈으로">
+  <img src="https://soosooland.com/images/home.png" alt="수수랜드 홈">
+</button>
+  <div class="lang-toggle">
 <button id="lang-toggle" onclick="toggleLang()">English</button>
-<div class="header">
+ </div><!--lang-toggle  -->
+</div> <!-- .toolbar -->
+<header>
     <h1 class="main-title">
         <img src="banner2.jpeg" alt="워퍼즈 몽 Worpuzz Mong">
     </h1>
-</div>
+</header>
 
   <div class="description lang-ko">
   <p style="text-align: left; padding-left: 20px;">
@@ -383,7 +392,7 @@ margin-top: 30px;
   } else {
     body.classList.replace('en', 'ko');
     document.documentElement.lang = 'ko';
-    btn.textContent = 'EN';
+    btn.textContent = 'English';
     localStorage.setItem('soosoo-lang', 'ko'); // 여기
   }
 }
