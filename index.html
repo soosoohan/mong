@@ -75,7 +75,7 @@
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #FFF2EB; /* 전체 배경: 피치 크림톤 */
     margin: 0;
-    padding: 40px;
+    padding: 20px;
     text-align: center;
     color: #7A2E2E; /* 기본 텍스트: 부드러운 브라운 */
   }
@@ -119,11 +119,9 @@
     cursor: pointer;
     z-index: 100;
     border-radius: 22%; cursor: pointer; overflow: hidden;
-    transition: background 0.2s;
   }
   #lang-toggle:hover { background: #FFF2EB; }
 
-  .lang-ko, .lang-en { transition: opacity 0.2s; }
   body.en .lang-ko { display: none; }
   body.ko .lang-en { display: none; }
 header {
@@ -283,6 +281,11 @@ header { display: flow-root; height: auto !important; }
         color: white;
     }
 }
+  @media (max-width: 480px) {  
+.back-button { width: 40px;height: 40px;}
+body { padding: 10px; }
+}
+
 </style>
 </head>
 <body class="ko" onload="initLanguage()">
